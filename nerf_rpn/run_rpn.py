@@ -437,7 +437,7 @@ class Trainer:
                 if proposal.shape[0] == 0:
                     print(f'No proposals for {scene}')
                     continue
-                if gt.shape[0] == 0:
+                if gt.shape[0] == 0 or None in gt:
                     print(f'No GT for {scene}')
                     continue
                 
@@ -506,7 +506,10 @@ class Trainer:
             
             proposals = [p[:, :self.num_bbox_digits].cpu() for p in proposals]
             scores = [s.cpu() for s in scores]
-            gt_boxes = [b.cpu() for b in gt_boxes]
+            if None not in gt_boxes:
+                gt_boxes = [b.cpu() for b in gt_boxes]
+            else:
+                gt_boxes = [None]
             features = [f.cpu() for f in features]
             torch.cuda.empty_cache()
             
