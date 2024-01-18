@@ -182,7 +182,7 @@ class Trainer:
             self.logger.info(f'Loading checkpoint from {args.checkpoint}.')
             if args.load_backbone_only:
                 self.logger.info('Loading backbone only.')
-            checkpoint = torch.load(args.checkpoint)
+            checkpoint = torch.load(args.checkpoint, map_location='cpu')
 
             # print('Training args from checkpoint:')
             # print(checkpoint['train_args'])
